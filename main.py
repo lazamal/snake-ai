@@ -13,6 +13,7 @@ from candy import Candy
 
 
 
+
 class Game():
     def __init__(self):
 
@@ -24,6 +25,7 @@ class Game():
         self.spawn_candy_event = pygame.event.Event(self.spawn_candy)
         self.score = 0
         self.game_iteration = 0 
+        self.frame_iteration = 0 
 
         self.all_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
@@ -41,10 +43,33 @@ class Game():
         self.player.rect.center = PLAYER_STARTING_POINT
         self.player_path =[]
         self.game_iteration+=1
-        
+        self.frame_iteration = 0
+
   
-    
-      
+    def play_step(self, action):
+    # 1. Update frame iteration (to prevent infinite loops)
+        self.frame_iteration += 1
+        
+        # 2. Handle Action [Straight, Right, Left]
+        # You'll need logic here to update self.player.direction based on the action
+        
+        # 3. Move and Check Collisions
+        reward = 0
+        game_over = False
+        
+        # Example Reward logic
+        # If hit wall/trail: reward = -10, game_over = True
+        # If eat candy: reward = +10
+        
+        # 4. Update UI and Clock
+        self.all_sprites.update(self.dt)
+        self.screen.fill("black")
+        self.all_sprites.draw(self.screen)
+        pygame.display.update()
+        self.clock.tick(60)
+
+        return reward, game_over, self.score
+        
 
     def collisions(self):
 
@@ -126,6 +151,7 @@ class Game():
      
             while self.running:
                 self.dt = self.clock.tick(60) / 1000
+        
 
                
 
@@ -143,6 +169,7 @@ class Game():
                 self.all_sprites.draw(self.screen)
                 self.trail_position()  
                 self.collisions()
+                
 
 
                 pygame.display.update()

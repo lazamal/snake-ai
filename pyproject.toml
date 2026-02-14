@@ -1,0 +1,27 @@
+[project]
+name = "snake-ai"
+version = "0.1.0"
+description = "Snake AI using Reinforcement Learning"
+authors = [
+    {name = "Dor Lazarov", email = "lazamal@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pygame>=2.6.1",
+    "numpy>=2.4.2",
+    "torch>=2.0.0",
+]
+
+[tool.poetry.dependencies]
+# This tells Poetry to get Torch specifically from our custom link
+torch = { version = ">=2.0.0", source = "pytorch" }
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu126" 
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
